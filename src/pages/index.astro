@@ -1,4 +1,4 @@
-k---
+---
 import Layout from '../layouts/Layout.astro';
 import { getNews } from "../library/microcms";
 
@@ -8,15 +8,35 @@ const newsList = response.contents;
 ---
 
 <Layout title="トップページ">
-  <h1>お知らせ一覧</h1>
-  <ul>
+  
+  <div class="py-10 text-center">
+    <h1 class="text-4xl font-extrabold mb-4 text-transparent bg-clip-text 
+bg-gradient-to-r from-blue-400 to-purple-500">
+      Nagogree Official
+    </h1>
+    <p class="text-gray-400">活動の様子や最新情報をお届けします</p>
+  </div>
+
+  <h2 class="text-2xl font-bold mb-6 border-l-4 border-blue-500 
+pl-4">LATEST NEWS</h2>
+
+  <ul class="grid grid-cols-1 md:grid-cols-2 gap-6">
     {newsList.map((news) => (
-      <li style="margin-bottom: 2rem;">
-        <h2>{news.title}</h2>
-        <p style="color: #666;">{new 
-Date(news.createdAt).toLocaleDateString("ja-JP")}</p>
-        <div set:html={news.content} />
+      <li class="bg-gray-800 rounded-xl overflow-hidden shadow-lg 
+hover:shadow-blue-500/20 transition-all hover:-translate-y-1">
+        <div class="p-6">
+          <p class="text-sm text-gray-400 mb-2">
+            {new Date(news.createdAt).toLocaleDateString("ja-JP")}
+          </p>
+          <h3 class="text-xl font-bold mb-4 line-clamp-2">
+            {news.title}
+          </h3>
+          
+          <div class="text-gray-300 text-sm line-clamp-3 opacity-80" 
+set:html={news.content} />
+        </div>
       </li>
     ))}
   </ul>
+
 </Layout>

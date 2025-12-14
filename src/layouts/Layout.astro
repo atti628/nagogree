@@ -13,20 +13,23 @@ const { title } = Astro.props;
     <title>{title} | Nagogree</title>
     <meta name="viewport" content="width=device-width" />
   </head>
-  <body>
-    <header style="background: #333; color: white; padding: 1rem;">
-      <nav>
-        <a href="/" style="color: white; margin-right: 15px;">ホーム</a>
-        <a href="/about" style="color: white;">部活紹介</a>
+  <body class="bg-gray-900 text-gray-100 font-sans antialiased">
+    
+    <header class="bg-black/50 backdrop-blur-md sticky top-0 border-b 
+border-gray-800">
+      <nav class="max-w-4xl mx-auto flex gap-6 p-4 font-bold">
+        <a href="/" class="hover:text-blue-400 transition-colors">HOME</a>
+        <a href="/about" class="hover:text-blue-400 
+transition-colors">ABOUT</a>
       </nav>
     </header>
 
-    <main style="max-width: 800px; margin: 2rem auto; padding: 0 1rem;">
+    <main class="max-w-4xl mx-auto p-6 min-h-screen">
       <slot />
     </main>
 
-    <footer style="text-align: center; padding: 2rem; border-top: 1px 
-solid #ccc;">
+    <footer class="text-center py-10 text-gray-500 text-sm border-t 
+border-gray-800 mt-10">
       &copy; 2025 Nagogree
     </footer>
   </body>

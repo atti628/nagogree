@@ -2,6 +2,10 @@
 // ==============================================
 // Footer.astro
 // ==============================================
+import { getAbout } from "../library/microcms";
+
+// 連絡先情報を取得
+const about = await getAbout();
 
 const links = [
   { name: "HOME", ja: "トップページ", href: "/" },
@@ -13,25 +17,16 @@ const links = [
 ---
 
 <footer class="bg-[#FDFBF7] border-t-4 border-[#DDCBB4] text-black pt-16 pb-8">
-  
   <div class="max-w-4xl mx-auto px-6">
-    
     <div class="flex flex-col md:flex-row justify-between items-start gap-12 mb-12">
       
       <div class="w-full md:w-1/2">
-        <h3 class="text-[#228B22] font-black text-xl tracking-widest mb-6 border-b-2 border-[#DDCBB4] inline-block pb-1">
-          CONTENTS
-        </h3>
-        
+        <h3 class="text-[#228B22] font-black text-xl tracking-widest mb-6 border-b-2 border-[#DDCBB4] inline-block pb-1">CONTENTS</h3>
         <div class="grid grid-cols-2 gap-3">
           {links.map((link) => (
             <a href={link.href} class="group relative bg-white pl-4 py-3 shadow-sm border-l-8 border-[#228B22] hover:bg-[#228B22] hover:translate-x-1 transition-all duration-300">
-              <span class="block text-lg font-bold font-mono text-gray-800 group-hover:text-white leading-none mb-1 transition-colors">
-                {link.name}
-              </span>
-              <span class="block text-xs text-gray-400 group-hover:text-white/80 transition-colors">
-                {link.ja}
-              </span>
+              <span class="block text-lg font-bold font-mono text-gray-800 group-hover:text-white leading-none mb-1 transition-colors">{link.name}</span>
+              <span class="block text-xs text-gray-400 group-hover:text-white/80 transition-colors">{link.ja}</span>
             </a>
           ))}
         </div>
@@ -47,27 +42,27 @@ const links = [
             以下の連絡先までお願いいたします。
           </p>
           
-          <a href="mailto:contact@nagogree.com" class="group block bg-white border border-[#DDCBB4] p-4 rounded text-center hover:bg-[#228B22] hover:text-white hover:border-[#228B22] transition-colors duration-300 shadow-sm">
-            <span class="block text-xs text-gray-500 mb-1 group-hover:text-white/80 transition-colors">E-mail</span>
-            <span class="text-lg font-bold font-mono">contact@nagogree.com</span>
-          </a>
+          {about.email && (
+            <a href={`mailto:${about.email}`} class="group block bg-white border border-[#DDCBB4] p-4 rounded text-center hover:bg-[#228B22] hover:text-white hover:border-[#228B22] transition-colors duration-300 shadow-sm">
+              <span class="block text-xs text-gray-500 mb-1 group-hover:text-white/80 transition-colors">E-mail</span>
+              <span class="text-lg font-bold font-mono">{about.email}</span>
+            </a>
+          )}
 
-          <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer" class="group block bg-white border border-[#DDCBB4] p-4 rounded text-center hover:bg-black hover:text-white hover:border-black transition-colors duration-300 shadow-sm">
-            <span class="block text-xs text-gray-500 mb-1 group-hover:text-white/80 transition-colors">Twitter (DM)</span>
-            <span class="text-lg font-bold font-mono">@NagoGree_Official</span>
-          </a>
+          {about.twitter && (
+            <a href={about.twitter} target="_blank" rel="noopener noreferrer" class="group block bg-white border border-[#DDCBB4] p-4 rounded text-center hover:bg-black hover:text-white hover:border-black transition-colors duration-300 shadow-sm">
+              <span class="block text-xs text-gray-500 mb-1 group-hover:text-white/80 transition-colors">Twitter (DM)</span>
+              <span class="text-lg font-bold font-mono">Official Twitter</span>
+            </a>
+          )}
 
-          <p class="text-xs text-gray-500 text-right">
-            ※ 返信には数日いただく場合がございます。
-          </p>
+          <p class="text-xs text-gray-500 text-right">※ 返信には数日いただく場合がございます。</p>
         </div>
       </div>
-
     </div>
 
     <div class="border-t border-[#DDCBB4] pt-8 text-center text-sm text-gray-500 font-mono">
       &copy; 2025 NagoGree. All Rights Reserved.
     </div>
-
   </div>
 </footer>

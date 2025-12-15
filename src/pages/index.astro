@@ -1,17 +1,14 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { getConcerts } from "../library/microcms";
+import { getConcerts, getAbout } from "../library/microcms";
 
-// 1. 演奏会データを取得
-const response = await getConcerts({ limit: 10 }); // 直近の未来のものを探すため少し多めに取る
-const allConcerts = response.contents;
+// 演奏会と、連絡先(about)の両方を取得
+const concertResponse = await getConcerts({ limit: 10 });
+const about = await getAbout();
 
-// 2. 「今日より未来」の演奏会だけを抜き出す
+const allConcerts = concertResponse.contents;
 const today = new Date().toISOString();
-const upcomingConcerts = allConcerts
-  .filter(concert => concert.date >= today) // 未来のみ
-  .reverse() // 日付が近い順に並べ替え
-  .slice(0, 3); // 最大3件まで表示
+const upcomingConcerts = allConcerts.filter(concert => concert.date >= today).reverse().slice(0, 3);
 ---
 
 <Layout title="ホーム">
@@ -137,19 +134,25 @@ const upcomingConcerts = allConcerts
       </div>
 
       <div class="flex justify-center gap-6">
-        <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer" class="w-16 h-16 bg-black text-white rounded-full flex items-center justify-center hover:scale-110 transition-transform duration-300">
-          <span class="font-bold text-xl">X</span>
-        </a>
+        {about.twitter && (
+          <a href={about.twitter} target="_blank" rel="noopener noreferrer" class="w-16 h-16 bg-black text-white rounded-full flex items-center justify-center hover:scale-110 transition-transform duration-300">
+            <span class="font-bold text-xl">X</span>
+          </a>
+        )}
         
-        <a href="https://instagram.com/" target="_blank" rel="noopener noreferrer" class="w-16 h-16 bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-500 text-white rounded-full flex items-center justify-center hover:scale-110 transition-transform duration-300">
-          <span class="font-bold text-xl">In</span>
-        </a>
+        {about.instagram && (
+          <a href={about.instagram} target="_blank" rel="noopener noreferrer" class="w-16 h-16 bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-500 text-white rounded-full flex items-center justify-center hover:scale-110 transition-transform duration-300">
+            <span class="font-bold text-xl">In</span>
+          </a>
+        )}
 
-        <a href="https://youtube.com/" target="_blank" rel="noopener noreferrer" class="w-16 h-16 bg-[#FF0000] text-white rounded-full flex items-center justify-center hover:scale-110 transition-transform duration-300">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/>
-          </svg>
-        </a>
+        {about.youtube && (
+          <a href={about.youtube} target="_blank" rel="noopener noreferrer" class="w-16 h-16 bg-[#FF0000] text-white rounded-full flex items-center justify-center hover:scale-110 transition-transform duration-300">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/>
+            </svg>
+          </a>
+        )}
       </div>
       
       <div class="text-center mt-8">

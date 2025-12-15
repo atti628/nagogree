@@ -6,7 +6,9 @@
 const menuItems = [
   { name: "HOME", href: "/" },
   { name: "ABOUT", href: "/about" },
-  // { name: "MEMBER", href: "/member" },
+  { name: "CONCERT", href: "/concert" },   // 追加
+  { name: "ACTIVITY", href: "/activity" }, // 追加
+  { name: "JOIN US", href: "/join" },      // 追加
 ];
 ---
 
@@ -58,15 +60,18 @@ const menuItems = [
 
   const toggleMenu = () => {
     if (menu) {
+      // クラスの付け外しで表示/非表示を切り替え
       menu.classList.toggle('translate-x-full');
       menu.classList.toggle('opacity-0');
       menu.classList.toggle('pointer-events-none');
     }
   };
 
+  // イベントリスナーの設定
   if (toggleBtn) toggleBtn.addEventListener('click', toggleMenu);
   if (closeBtn) closeBtn.addEventListener('click', toggleMenu);
 
+  // リンクをクリックしたらメニューを閉じる
   links.forEach(link => {
     link.addEventListener('click', toggleMenu);
   });
